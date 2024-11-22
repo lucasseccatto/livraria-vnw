@@ -23,13 +23,11 @@ header {
   ul {
     display: flex;
     justify-content: space-around;
-    list-style: none;
   }
 
   .link {
     color: #ffffff;
     font-size: 20px;
-    text-decoration: none;
 
     &:hover {
       color: aqua;
