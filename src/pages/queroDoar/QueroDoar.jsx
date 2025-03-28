@@ -1,8 +1,46 @@
+import { useState } from "react";
+import axios from "axios";
+
 import s from "./queroDoar.module.scss";
 
 import iconeLivro from "../../assets/icone-livro.png";
 
 export default function QueroDoar() {
+  const [titulo, setTitulo] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [autor, setAutor] = useState("");
+  const [image_url, setImage_Url] = useState("");
+
+  const capturaTitulo = (e) => {
+    setTitulo(e.target.value);
+  };
+
+  const capturaCategoria = (e) => {
+    setCategoria(e.target.value);
+  };
+
+  const capturaAutor = (e) => {
+    setAutor(e.target.value);
+  };
+
+  const capturaImage = (e) => {
+    setImage_Url(e.target.value);
+  };
+
+  const enviarDados = async () => {
+    const dadosPEnviar = {
+      titulo,
+      categoria,
+      autor,
+      image_url,
+    };
+
+    await axios.post(
+      "https://api-vnw-doacao-de-livros.onrender.com/doar",
+      dadosPEnviar
+    );
+  };
+
   return (
     <section className={s.queroDoarSection}>
       <p>
@@ -10,7 +48,7 @@ export default function QueroDoar() {
         do Livro
       </p>
 
-      <form action="">
+      <form onSubmit={(e) => e.preventDefault()}>
         <div>
           <img
             src={iconeLivro}
@@ -19,11 +57,24 @@ export default function QueroDoar() {
           <h2>Informações do Livro</h2>
         </div>
 
-        <input type="text" name="" id="" placeholder="Título" />
-        <input type="text" name="" id="" placeholder="Categoria" />
-        <input type="text" name="" id="" placeholder="Autor" />
-        <input type="text" name="" id="" placeholder="Link da Imagem" />
-        <input className={s.buttonDoar} type="submit" value="Doar" />
+        <input type="text" placeholder="Título" onChange={capturaTitulo} />
+        <input
+          type="text"
+          placeholder="Categoria"
+          onChange={capturaCategoria}
+        />
+        <input type="text" placeholder="Autor" onChange={capturaAutor} />
+        <input
+          type="text"
+          placeholder="Link da Imagem"
+          onChange={capturaImage}
+        />
+        <input
+          className={s.buttonDoar}
+          type="submit"
+          value="Doar"
+          onClick={enviarDados}
+        />
       </form>
     </section>
   );
